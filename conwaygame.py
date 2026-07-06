@@ -96,7 +96,7 @@ def rendercells():
 
 
 pygame.init()
-display = pygame.display.set_mode((screenlengthx, screenlengthy))
+display = pygame.display.set_mode((displaylengthx, displaylengthy))
 pygame.display.init()
 clock = pygame.time.Clock()
 running = True
@@ -108,7 +108,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    time.sleep(3)
     cellsatwork(grid)
     printgrid()
 
