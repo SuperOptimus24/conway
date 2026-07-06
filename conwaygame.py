@@ -81,14 +81,14 @@ def cellsatwork(screen):
 def rendercells():
     cellwidth = int(displaylengthx / len(grid))
     cellheight = int(displaylengthy / len(grid[0]))
-    cellcolor = pygame.Color()
-    surface = pygame.Surface(displaylengthx, displaylengthy)
+    cellcolor = pygame.Color(0,0,0)
+    surface = pygame.Surface((displaylengthx, displaylengthy))
     for row in range(len(grid)):
         celly = row * cellheight
         for columns in range(len(grid[0])):
             cellx = columns * cellwidth
             cell = pygame.Rect(cellx, celly, cellwidth, cellheight)
-            if grid[columns][row] == 1:
+            if grid[row][columns] == 1:
                 cellcolor = pygame.Color(255, 255, 255)
             else:
                 cellcolor = pygame.Color(0, 0, 0)
@@ -97,10 +97,24 @@ def rendercells():
 
 pygame.init()
 display = pygame.display.set_mode((screenlengthx, screenlengthy))
+pygame.display.init()
 clock = pygame.time.Clock()
 running = True
 
-for i in range(5):
+while running:
+    # poll for events
+    # pygame.QUIT event means the user clicked X to close your window
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
     time.sleep(3)
     cellsatwork(grid)
     printgrid()
+
+    rendercells()
+    
+    pygame.display.flip()
+
+    clock.tick(60)  # limits FPS to 60
+pygame.quit()
