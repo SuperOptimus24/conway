@@ -1,9 +1,11 @@
 import random
 import time
-
+import pygame
 
 screenlengthx = 15
 screenlengthy = 20
+displaylengthx = 1280
+displaylengthy= 720
 
 grid = []
 temprow = []
@@ -75,6 +77,28 @@ def cellsatwork(screen):
                 #if cell is dead and neighbors are three, comes to life
                 setcell(columns, row, 1)
 
+
+def rendercells():
+    cellwidth = int(displaylengthx / len(grid))
+    cellheight = int(displaylengthy / len(grid[0]))
+    cellcolor = pygame.Color()
+    surface = pygame.Surface(displaylengthx, displaylengthy)
+    for row in range(len(grid)):
+        celly = row * cellheight
+        for columns in range(len(grid[0])):
+            cellx = columns * cellwidth
+            cell = pygame.Rect(cellx, celly, cellwidth, cellheight)
+            if grid[columns][row] == 1:
+                cellcolor = pygame.Color(255, 255, 255)
+            else:
+                cellcolor = pygame.Color(0, 0, 0)
+            pygame.draw.rect(surface, cellcolor, cell)
+
+
+pygame.init()
+display = pygame.display.set_mode((screenlengthx, screenlengthy))
+clock = pygame.time.Clock()
+running = True
 
 for i in range(5):
     time.sleep(3)
