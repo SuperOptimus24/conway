@@ -76,8 +76,8 @@ def cellsatwork(screen):
             elif screen[row][columns] == 0 and cellcount == 3:
                 #if cell is dead and neighbors are three, comes to life
                 setcell(columns, row, 1)
-    screen = futuregrid
-    return screen
+
+    return futuregrid
 
 
 def rendercells():
@@ -111,6 +111,8 @@ while running:
 
     grid = cellsatwork(grid)
     printgrid()
+
+    pygame.Surface.fill(display, pygame.Color(0, 0, 0))
 
     rendercells()
     
