@@ -49,10 +49,18 @@ def checkcell(x,y):
         tempcellcount += grid[y][x+1]
     if x-1 >= 0:
         tempcellcount += grid[y][x-1]
+    if y+1 < len(grid) and x+1 < len(grid[y]):
+        tempcellcount += grid[y + 1][x + 1]
+    if y+1 < len(grid) and x-1 >= 0:
+        tempcellcount += grid[y + 1][x - 1]
+    if y-1 >= 0 and x+1 < len(grid[y]):
+        tempcellcount += grid[y - 1][x + 1]
+    if y-1 >= 0 and x-1 >= 0:
+        tempcellcount += grid[y - 1][x - 1]
 
     return tempcellcount
 
-def setcell(x, y, status):
+def setcell(x, y, status, futuregrid):
     futuregrid[y].pop(x)
     futuregrid[y].insert(x, status)
 
@@ -62,21 +70,21 @@ def setcell(x, y, status):
 
 def cellsatwork(screen):
 
-    futuregrid = [row.copy() for row in screen]
+    futuregrid = screen
 
     for row in range(len(grid)):
         for columns in range(len(grid[0])):
-            cellcount = checkcell(columns, row)
+            cellcount = checkcell(columns, row, )
             if cellcount < 2:
                 #if cell has less than two neighbors, cell dies
-                setcell(columns, row, 0)
+                setcell(columns, row, 0, futuregrid)
             elif cellcount > 3:
                 #if cell has more than 3 neighbors, dies
-                setcell(columns, row, 0)
+                setcell(columns, row, 0, futuregrid)
             elif screen[row][columns] == 0 and cellcount == 3:
                 #if cell is dead and neighbors are three, comes to life
-                setcell(columns, row, 1)
-
+                setcell(columns, row, 1, futuregrid)
+    
     return futuregrid
 
 
@@ -115,6 +123,8 @@ while running:
     pygame.Surface.fill(display, pygame.Color(0, 0, 0))
 
     rendercells()
+
+    time.sleep(1)
     
     pygame.display.flip()
 
