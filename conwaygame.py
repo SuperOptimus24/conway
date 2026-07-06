@@ -9,7 +9,7 @@ displaylengthy= 720
 
 grid = []
 temprow = []
-
+futuregrid = []
 #create screen
 
 for columns in range(screenlengthx):
@@ -76,13 +76,14 @@ def cellsatwork(screen):
             elif screen[row][columns] == 0 and cellcount == 3:
                 #if cell is dead and neighbors are three, comes to life
                 setcell(columns, row, 1)
+    screen = futuregrid
+    return screen
 
 
 def rendercells():
-    cellwidth = int(displaylengthx / len(grid))
-    cellheight = int(displaylengthy / len(grid[0]))
-    cellcolor = pygame.Color(0,0,0)
-    surface = pygame.Surface((displaylengthx, displaylengthy))
+    cellwidth = int(displaylengthx / len(grid[0]))
+    cellheight = int(displaylengthy / len(grid))
+    cellcolor = pygame.Color(255,255,255)
     for row in range(len(grid)):
         celly = row * cellheight
         for columns in range(len(grid[0])):
@@ -92,7 +93,7 @@ def rendercells():
                 cellcolor = pygame.Color(255, 255, 255)
             else:
                 cellcolor = pygame.Color(0, 0, 0)
-            pygame.draw.rect(surface, cellcolor, cell)
+            pygame.draw.rect(display, cellcolor, cell)
 
 
 pygame.init()
@@ -108,7 +109,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    cellsatwork(grid)
+    grid = cellsatwork(grid)
     printgrid()
 
     rendercells()
